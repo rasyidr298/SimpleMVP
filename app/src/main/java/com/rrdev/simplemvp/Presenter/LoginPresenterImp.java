@@ -1,18 +1,16 @@
-package com.rrdev.simplemvp;
+package com.rrdev.simplemvp.Presenter;
 
-public class LoginPresenter implements LoginInteractor.OnLoginFinishedListener {
+public class LoginPresenterImp implements LoginPresenter.OnLoginFinishedListener {
     private LoginView loginView;
-    private LoginInteractor loginInteractor;
+    private LoginPresenter loginPresenter;
 
-    public LoginPresenter( LoginView loginView,LoginInteractor loginInteractor) {
-
-        this.loginInteractor = loginInteractor;
+    public LoginPresenterImp(LoginView loginView, LoginPresenter loginPresenter) {
+        this.loginPresenter = loginPresenter;
         this.loginView = loginView;
     }
 
     @Override
     public void onLoginError() {
-
         if (loginView!=null)
         {
             loginView.onLoginError();
@@ -23,7 +21,7 @@ public class LoginPresenter implements LoginInteractor.OnLoginFinishedListener {
     {
         if (loginView!=null)
         {
-            loginInteractor.canLogin(username,password,this);
+            loginPresenter.canLogin(username,password,this);
         }
     }
 
@@ -36,7 +34,6 @@ public class LoginPresenter implements LoginInteractor.OnLoginFinishedListener {
 
     @Override
     public void onPasswordError() {
-
         if (loginView != null) {
             loginView.setPasswordError();
         }
@@ -45,7 +42,6 @@ public class LoginPresenter implements LoginInteractor.OnLoginFinishedListener {
 
     @Override
     public void onLoginSuccess(String username) {
-
         if (loginView != null) {
             loginView.onLoginSuccess(username);
         }

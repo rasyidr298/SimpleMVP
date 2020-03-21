@@ -1,4 +1,4 @@
-package com.rrdev.simplemvp;
+package com.rrdev.simplemvp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,21 +9,24 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.rrdev.simplemvp.Presenter.LoginPresenter;
+import com.rrdev.simplemvp.Presenter.LoginPresenterImp;
+import com.rrdev.simplemvp.Presenter.LoginView;
+import com.rrdev.simplemvp.R;
+
 public class MainActivity extends AppCompatActivity implements LoginView {
 
-
-    EditText etUsername, etPassword;
-    ProgressBar progressbar;
-
-    LoginPresenter loginPresenter;
-
+    private EditText etUsername, etPassword;
+    private ProgressBar progressbar;
+    private LoginPresenterImp loginPresenterImp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        loginPresenter = new LoginPresenter(this, new LoginInteractor());
+        hideProgressbar();
+        loginPresenterImp = new LoginPresenterImp(this, new LoginPresenter());
     }
 
     void initViews() {
@@ -34,8 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoginView {
 
     public void loginMe(View view) {
         showProgressbar();
-
-        loginPresenter.validateCredentials(etUsername.getText().toString().trim(), etPassword.getText().toString().trim());
+        loginPresenterImp.validateCredentials(etUsername.getText().toString().trim(), etPassword.getText().toString().trim());
     }
 
     @Override
@@ -47,38 +49,31 @@ public class MainActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void setPasswordError() {
-
         hideProgressbar();
         etPassword.setError("password can't be empty!");
     }
 
     @Override
-    public void onLoginSuccess(String username) {
-
-
-        Intent intent = new Intent(this, WelcomeActivity.class);
+    public void onLoginSuccess(final String username) {
+        Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
         intent.putExtra("username", username);
         startActivity(intent);
-
     }
 
     @Override
     public void onLoginError() {
         hideProgressbar();
-
         Toast.makeText(this, "username or password doesn't match", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showProgressbar() {
-
         progressbar.setVisibility(View.VISIBLE);
 
     }
 
     @Override
     public void hideProgressbar() {
-
         progressbar.setVisibility(View.GONE);
 
     }

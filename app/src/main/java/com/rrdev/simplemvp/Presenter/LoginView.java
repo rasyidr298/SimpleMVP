@@ -1,4 +1,4 @@
-package com.rrdev.simplemvp;
+package com.rrdev.simplemvp.Presenter;
 
 public interface LoginView {
     void setUsernameError();

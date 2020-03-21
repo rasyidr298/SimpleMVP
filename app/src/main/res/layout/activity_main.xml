@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".Activity.MainActivity">
 
     <EditText
         android:id="@+id/etUsername"
@@ -20,8 +20,15 @@
         android:layout_height="wrap_content"
         android:hint="Password"/>
 
+    <Button
+        android:onClick="loginMe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"/>
+
     <ProgressBar
         android:id="@+id/progressbar"
+        android:layout_marginTop="10dp"
         android:layout_width="50dp"
         android:layout_height="50dp"/>
 
